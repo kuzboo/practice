@@ -84,7 +84,7 @@ void print(const vector<int> &nums)
 
 int main()
 {
-    vector<int> nums = {1, 6, 2, 3, 99, 7};
-    heapsort(nums,sizeof(nums));
+    vector<int> nums = {1, 6, 2, 3, 5, 7};
+    heapsort(nums,6);
     print(nums);
 }
