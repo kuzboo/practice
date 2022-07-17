@@ -58,22 +58,48 @@ void quickSort(vector<int>&nums,int low,int high)
 //     }
 // }
 
+
+// int getMid(vector<int> &nums,int low,int high)
+// {
+//     int key = nums[high];  //选择最后一个元素作为标志
+//     int i = low;
+//     for (int j = low; j < high;j++)
+//     {
+//         if(nums[j]<key)
+//         {
+//             swap(nums[j], nums[i++]);
+//         }
+//     }
+//     swap(nums[i], nums[high]);
+//     return i;
+// }
+
+// void quickSort(vector<int> &nums,int low, int high)
+// {
+//     if(low<high)
+//     {
+//         int mid = getMid(nums, low, high);
+//         quickSort(nums, low, mid - 1);
+//         quickSort(nums, mid + 1, high);
+//     }
+// }
+
 int getMid(vector<int> &nums,int low,int high)
 {
-    int key = nums[high];  //选择最后一个元素作为标志
+    int key = nums[high];
     int i = low;
-    for (int j = low; j < high;j++)
+    for (int j = low; j < high;++j)
     {
-        if(nums[j]<key)
+        if(nums[j]<key)//小于key 不是大于key
         {
-            swap(nums[j], nums[i++]);
+            swap(nums[i++], nums[j]);
         }
     }
-    swap(nums[i], nums[high]);
+    swap(nums[high], nums[i]);
     return i;
 }
 
-void quickSort(vector<int> &nums,int low, int high)
+void quickSort(vector<int> &nums,int low,int high)
 {
     if(low<high)
     {

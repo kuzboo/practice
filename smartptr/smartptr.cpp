@@ -13,8 +13,8 @@ class Counter
 public:
     Counter() : m_refCount(0){};
     ~Counter(){};
-    Counter(const Counter &) = delete;
-    Counter &operator=(const Counter &) = delete;
+    //Counter(const Counter &) = delete;
+    //Counter &operator=(const Counter &) = delete;
 private:
     atomic_uint m_refCount;//原子操作
 };
@@ -26,7 +26,7 @@ public:
     SharePtr(T *ptr);
     ~SharePtr();
     SharePtr(const SharePtr &s);
-    SharePtr<T> &operator=(const SharePtr<T> &s);  //因为要返回具体的类型所以要加模板参数
+    SharePtr<T> &operator=(const SharePtr &s);  //因为要返回具体的类型所以要加模板参数
     T &operator*() { return *m_ptr; }
     T *operator->() { return m_ptr; }
     int use_count() { return m_cnt->m_refCount; }
@@ -51,6 +51,7 @@ template<typename T>
 SharePtr<T>::~SharePtr()
 {
     release();
+    cout << "distructor" << endl;
 }
 
 template <typename T>
@@ -84,7 +85,6 @@ void SharePtr<T>::release()
     {
         delete m_ptr;
         m_ptr = nullptr;
-        cout << "Distructor" << endl;
     }
 }
 
@@ -92,9 +92,11 @@ int main()
 {
     SharePtr<int> sp1(new int(1));
     SharePtr<int> sp2(new int(2));
-    cout <<"sp1.use_count(): " <<sp1.use_count() << endl;
+    SharePtr<int> sp3(sp2);
+    cout << "sp1.use_count(): " << sp1.use_count() << endl;
     cout << "sp2.use_count(): "<<sp2.use_count() << endl;
     sp2 = sp1;
+
     cout <<"sp1.use_count(): " <<sp1.use_count() << endl;
     cout << "sp2.use_count(): "<<sp2.use_count() << endl;
 }

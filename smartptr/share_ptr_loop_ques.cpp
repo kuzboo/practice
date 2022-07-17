@@ -50,6 +50,10 @@ int main()
     cout << sizeof(weak_ptr<int>) << endl;
     cout << sizeof(shared_ptr<int>) << endl;
     cout << sizeof(unique_ptr<int>) << endl;
-    
+    shared_ptr<int> sptr(new int(1));
+    cout << sptr.use_count() << endl;
+    shared_ptr<int> sptr2(new int(2));
+    sptr2 = sptr;
+    cout << sptr.use_count() << endl;
     return 0;
 }
