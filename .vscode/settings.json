@@ -35,6 +35,8 @@
         "stdexcept": "cpp",
         "utility": "cpp",
         "typeinfo": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "iterator": "cpp",
+        "memory": "cpp"
     }
 }

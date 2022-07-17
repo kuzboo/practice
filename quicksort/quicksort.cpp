@@ -122,4 +122,5 @@ int main()
     vector<int> nums = {1, 6, 2, 3, 99, 7};
     quickSort(nums,0,6);
     print(nums);
+    cout << sizeof(int) << endl;
 }

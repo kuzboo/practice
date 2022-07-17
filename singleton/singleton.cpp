@@ -34,7 +34,7 @@ private:
     single2()
     {
         pthread_mutex_init(&lock, NULL);
-    };
+    }
     ~single2(){};
 
     static single2 *m_instance;
@@ -45,7 +45,7 @@ public:
 };
 
 single2 *single2::m_instance = NULL;
-pthread_mutex_t single2::lock;
+pthread_mutex_t single2::lock = PTHREAD_MUTEX_INITIALIZER;
 
 single2 *single2::getinstance()
 {
