@@ -74,7 +74,35 @@ using namespace std;
 //     }
 // }
 
-void buildHeap(vector<int> &nums,int n,int i)
+// void buildHeap(vector<int> &nums,int n,int i)
+// {
+//     int max = i;
+//     int lson = i * 2 + 1, rson = i * 2 + 2;
+//     if (lson < n && nums[lson] > nums[max])
+//         max = lson;
+//     if (rson < n && nums[rson] > nums[max])
+//         max = rson;
+//     if (max != i)
+//     {
+//         swap(nums[i], nums[max]);
+//         buildHeap(nums, n, max);
+//     }
+// }
+
+// void heapSort(vector<int> &nums,int n)
+// {
+//     for (int i = n / 2 - 1; i >= 0;--i)//从最后一个节点的父节点开始建堆
+//     {
+//         buildHeap(nums, n, i);
+//     }
+//     for (int i = n - 1; i >= 0;--i) //从最后一个开始交换
+//     {
+//         swap(nums[i], nums[0]);
+//         buildHeap(nums, i, 0);
+//     }
+// }
+
+void buildHeap(vector<int>&nums,int n,int i)
 {
     int max = i;
     int lson = i * 2 + 1, rson = i * 2 + 2;
@@ -91,11 +119,11 @@ void buildHeap(vector<int> &nums,int n,int i)
 
 void heapSort(vector<int> &nums,int n)
 {
-    for (int i = n / 2 - 1; i >= 0;--i)//从最后一个节点的父节点开始建堆
+    for (int i = n / 2 - 1; i >= 0;--i)
     {
         buildHeap(nums, n, i);
     }
-    for (int i = n - 1; i >= 0;--i) //从最后一个开始交换
+    for (int i = n - 1; i >= 0;--i)
     {
         swap(nums[i], nums[0]);
         buildHeap(nums, i, 0);
@@ -113,7 +141,7 @@ void print(const vector<int> &nums)
 
 int main()
 {
-    vector<int> nums = {1, 6, 2, 3, 5, 7};
+    vector<int> nums = {1, 6, 4, 3, 5, 88};
     heapSort(nums,6);
     print(nums);
 }
