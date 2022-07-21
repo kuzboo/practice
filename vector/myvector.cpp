@@ -1,50 +1,98 @@
-#include<bits/allocator.h>
+#include<cstdlib>
+#include<cstring>
 #include<iostream>
+
 using namespace std;
 
-template <class T, class Alloc = allocator<T>>
-class MyVector
+template <typename T>
+class myVector
 {
 public:
-    typedef T value_type;
-    typedef value_type *iterator;
-    typedef value_type &reference;
-    typedef size_t size_type;
-private:
-    iterator start;
-    iterator finish;
-    iterator end_of_storage;
-public:
-    MyVector() : start(0), finish(0), end_of_storage(0) {};
-    MyVector(const size_type &n, value_type val)
+    myVector()
     {
-        start = new T(n);
-        finish = n;
-        for (; start < finish;++start)
-            *start = val;
+        m_data = NULL;
+        m_len = m_size = 0;
     }
-    ~MyVector(){};
-    iterator begin() { return start; }
-    iterator end() { return finish; }
-    size_type size() { return size_type(end() - begin()); }
-    size_type capacity() { return size_type(end_of_storage - begin()); }
-    bool empty() { return begin() == end(); }
-    reference operator[](size_type n) { return *(begin() + n); }
+    myVector(size_t len)
+    {
+        m_data = new T[len];
+        m_len = len;
+        m_size = 0;
+    }
+    myVector(const myVector& rhs)
+    {
+        if (this != &rhs)
+        {
+            //delete[] m_data; 赋值操作才需要
+            m_data = new T[rhs.m_len];
+            for (int i = 0; i < rhs.m_size;++i)
+            {
+                m_data[i] = rhs.m_data[i];
+            }
+            m_len = rhs.m_len;
+            m_size = rhs.m_size;
+        }
+        return;
+    }
+    myVector<T>& operator=(const myVector<T> &rhs)
+    {
+        if(this->m_data!=rhs.m_data)
+        {
+            delete[] m_data;
+            m_data = new T[rhs.m_len];
+            for (int i = 0; i < rhs.m_size;++i)
+            {
+                m_data[i] = rhs.m_data[i];
+            }
+            m_len = rhs.m_len;
+            m_size = rhs.m_size;
+        }
+        return *this;
+    }
+    T &operator[](size_t index)
+    {
+        return m_data[index];
+    }
+
+    void push_back(const T &_val)
+    {
+        if(m_size>=m_len)
+        {
+            size_t newLen = m_len == 0 ? 1 : 2 * m_len;
+            T *newData = new T[newLen];
+            //m_len = newLen;不能写这里？？
+            memcpy(newData, m_data, m_len * sizeof(T));
+            delete[] m_data;
+            m_data = newData;
+            m_len = newLen;
+        }
+        m_data[m_size++] = _val;
+    }
+
+    size_t size() { return m_size; }
+    size_t capacity() { return m_len; }
+
 private:
-};
-
-class A
-{
-    virtual ~A();
-};
-
-class B :public A
-{
+    T* m_data;
+    size_t m_len;
+    size_t m_size;
 };
 
 int main()
 {
-    MyVector<int> vec;
-    cout << vec.size() << endl;
-    MyVector<int> *vec = new MyVector<int>(10, 1);
+    myVector<int> v;
+    myVector<int> v1;
+    for (int i = 0; i < 10; ++i)
+    {
+        v.push_back(i);
+        cout << v[i] << " ";
+    }
+    v1 = v;
+    cout << endl;
+    cout << v.size() << endl;
+    cout << v.capacity() << endl;
+    for (int i = 0; i < 10; ++i)
+    {
+        cout << v1[i] << " ";
+    }
 }

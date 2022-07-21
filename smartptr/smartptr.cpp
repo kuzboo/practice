@@ -2,10 +2,8 @@
 #include<iostream>
 #include<vector>
 using namespace std;
-
 template <typename T>
 class SharePtr;
-
 template <typename T>
 class Counter
 {
@@ -13,8 +11,6 @@ class Counter
 public:
     Counter() : m_refCount(0){};
     ~Counter(){};
-    //Counter(const Counter &) = delete;
-    //Counter &operator=(const Counter &) = delete;
 private:
     atomic_uint m_refCount;//原子操作
 };
@@ -30,14 +26,12 @@ public:
     T &operator*() { return *m_ptr; }
     T *operator->() { return m_ptr; }
     int use_count() { return m_cnt->m_refCount; }
-
 private:
     void release();
 private:
     T *m_ptr;
     Counter<T> *m_cnt;
 };
-
 template<typename T>
 SharePtr<T>::SharePtr(T *ptr):m_ptr(ptr),m_cnt(new Counter<T>)
 {
@@ -53,7 +47,6 @@ SharePtr<T>::~SharePtr()
     release();
     cout << "distructor" << endl;
 }
-
 template <typename T>
 SharePtr<T>::SharePtr(const SharePtr &s)
 {
@@ -62,7 +55,6 @@ SharePtr<T>::SharePtr(const SharePtr &s)
     m_cnt = s.m_cnt;
     cout << "Copy Constructor " << endl;
 }
-
 template <typename T>
 SharePtr<T> &SharePtr<T>::operator=(const SharePtr &s)
 {
@@ -76,7 +68,6 @@ SharePtr<T> &SharePtr<T>::operator=(const SharePtr &s)
     }
     return *this;
 }
-
 template<typename T>
 void SharePtr<T>::release()
 {

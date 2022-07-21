@@ -21,7 +21,6 @@ void cookietest(Alloc alloc,int n)
     alloc.deallocate(p2, sizeof(T));
     alloc.deallocate(p3, sizeof(T));
     cout << getpid() << endl;
-    getchar();
 }
 
 // template<typename Alloc>
