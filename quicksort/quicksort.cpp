@@ -84,28 +84,53 @@ void quickSort(vector<int>&nums,int low,int high)
 //     }
 // }
 
-int getMid(vector<int> &nums,int low,int high)
+// int getMid(vector<int> &nums,int low,int high)
+// {
+//     int key = nums[high];
+//     int i = low;
+//     for (int j = low; j < high;++j)
+//     {
+//         if(nums[j]<key)//小于key 不是大于key
+//         {
+//             swap(nums[i++], nums[j]);
+//         }
+//     }
+//     swap(nums[high], nums[i]);
+//     return i;
+// }
+
+// void quickSort(vector<int> &nums,int low,int high)
+// {
+//     if(low<high)
+//     {
+//         int mid = getMid(nums, low, high);
+//         quickSort(nums, low, mid - 1);
+//         quickSort(nums, mid + 1, high);
+//     }
+// }
+
+int getMid(vector<int>&nums,int left,int right)
 {
-    int key = nums[high];
-    int i = low;
-    for (int j = low; j < high;++j)
+    int key = nums[right];
+    int i = left;
+    for (int j = left; j < right;++j)
     {
-        if(nums[j]<key)//小于key 不是大于key
+        if(nums[j]<key)
         {
-            swap(nums[i++], nums[j]);
+            swap(nums[j], nums[i++]);
         }
     }
-    swap(nums[high], nums[i]);
+    swap(nums[i], nums[right]);
     return i;
 }
 
-void quickSort(vector<int> &nums,int low,int high)
+void quickSort(vector<int> &nums,int left,int right)
 {
-    if(low<high)
+    if(left<right)
     {
-        int mid = getMid(nums, low, high);
-        quickSort(nums, low, mid - 1);
-        quickSort(nums, mid + 1, high);
+        int mid = getMid(nums, left, right);
+        quickSort(nums, left, mid - 1);
+        quickSort(nums, mid + 1, right);
     }
 }
 
@@ -119,7 +144,7 @@ void print(const vector<int> &nums)
 }
 int main()
 {
-    vector<int> nums = {1, 6, 2, 3, 99, 7};
+    vector<int> nums = {1, 6, 4, 3, 99, 222};
     quickSort(nums,0,6);
     print(nums);
     cout << sizeof(int) << endl;
