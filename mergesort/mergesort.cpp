@@ -32,7 +32,6 @@ void merge(vector<int> &nums, vector<int> &temp, int left, int mid, int right)
         left++;
     }
 }
-
 //划分
 void msort(vector<int> &nums, vector<int> &temp, int left, int right)
 {
@@ -49,7 +48,6 @@ void msort(vector<int> &nums, vector<int> &temp, int left, int right)
         merge(nums, temp, left, mid, right);
     }
 }
-
 //归并排序入口
 void mergeSort(vector<int>&nums,int n)
 {
