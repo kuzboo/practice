@@ -1,6 +1,6 @@
 #include<deque>
 #include<pthread.h>
-#include<semaphore.h>
+
 using namespace std;
 
 template<typename T>
@@ -16,14 +16,15 @@ private:
     int m_max_requests;
     deque<T *> m_workqueue;
     pthread_mutex_t m_lock;
-    sem_t m_sem;
+    //sem_t m_sem;
+    pthread_cond_t m_cond;
 };
 
 template <typename T>
 BlockQueue<T>::BlockQueue(int max_request) : m_max_requests(max_request)
 {
-    sem_init(&m_sem, 0, 0);
     pthread_mutex_init(&m_lock);
+    pthread_cond_init(&m_cond, NULL);
 }
 template<typename T>
 BlockQueue<T>::~BlockQueue()
@@ -36,12 +37,16 @@ template <typename T>
 bool BlockQueue<T>::pop(T &val)
 {
     pthread_mutex_lock(&m_lock);
-    if(m_workqueue.empty())
+    // if(m_workqueue.empty())
+    // {
+    //     pthread_mutex_unlock(&m_lock);
+    //     return false;
+    // }
+    while(m_workqueue.size()<=0)
     {
-        pthread_mutex_unlock(&m_lock);
-        return false;
+        pthread_cond_wait(&m_cond, &m_lock);
     }
-    sem_wait(&m_sem);
+
     val = m_workqueue.front();
     m_workqueue.pop_front();
     pthread_mutex_unlock(&m_lock);
@@ -53,11 +58,12 @@ bool BlockQueue<T>::push(T &val)
     pthread_mutex_lock(&m_lock);
     if(m_workqueue.size()>=m_max_requests)
     {
+        pthread_cond_broadcast(&m_cond);
         pthread_mutex_unlock(&m_lock);
         return false;
     }
     m_workqueue.push_front(val);
-    sem_post(&m_sem);
+    pthread_cond_broadcast();
     pthread_mutex_unlock(&m_lock);
     return true;
 }
