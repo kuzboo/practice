@@ -14,13 +14,10 @@ class threadpool
 public:
     threadpool(int thread_num, int max_requests);
     ~threadpool();
-
     bool append(T *requeest);
-
 private:
     static void *worker(void *arg);
     void run();
-
 private:
     int m_pthread_num;//线程池中的线程数量
     int m_max_requests;
@@ -29,21 +26,16 @@ private:
     pthread_mutex_t m_queuelock; //保护请求队列的锁
     sem_t m_tasknum; //信号量代表任务数量
 };
-
 template<typename T>
 threadpool<T>::threadpool(int thread_num,int max_requests): m_pthread_num(thread_num),m_max_requests(max_requests)
 {
     pthread_mutex_init(&m_queuelock, NULL);
     sem_init(&m_tasknum, 0, 0);
-
     if (thread_num <= 0 || max_requests <= 0)
-    {
         throw runtime_error("数量请求必须大于0");
-    }
     m_thread = new pthread_t[thread_num];
     if(!m_thread)
         throw runtime_error("new线程池失败");
-
     for (int i = 0; i < thread_num;++i)
     {
         if(pthread_create(m_thread+i,NULL,worker,this)!=0)

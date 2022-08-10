@@ -38,8 +38,9 @@ threadpool<T>::threadpool(int thread_num, int max_request)
 
         if(thread_num<=0 || max_request<=0)
             throw runtime_error(" 线程数量 请求数量");
-        m_thread = new pthread_t(thread_num);
-        if(!m_thread)
+        //m_thread = new pthread_t(thread_num);
+        m_thread = new pthread_t[thread_num];
+        if (!m_thread)
             throw exception();
 
         for (int i = 0; i < m_thread_num;++i)

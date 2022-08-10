@@ -109,18 +109,43 @@ void quickSort(vector<int>&nums,int low,int high)
 //     }
 // }
 
-int getMid(vector<int>&nums,int left,int right)
+// int getMid(vector<int>&nums,int left,int right)
+// {
+//     int key = nums[right];
+//     int i = left;
+//     for (int j = left; j < right;++j)
+//     {
+//         if(nums[j]<key)
+//         {
+//             swap(nums[j], nums[i++]);
+//         }
+//     }
+//     swap(nums[i], nums[right]);
+//     return i;
+// }
+
+// void quickSort(vector<int> &nums,int left,int right)
+// {
+//     if(left<right)
+//     {
+//         int mid = getMid(nums, left, right);
+//         quickSort(nums, left, mid - 1);
+//         quickSort(nums, mid + 1, right);
+//     }
+// }
+
+int getMid(vector<int> &nums,int left,int right)
 {
     int key = nums[right];
     int i = left;
-    for (int j = left; j < right;++j)
+    for (int j = left; j < right; ++j)
     {
         if(nums[j]<key)
         {
             swap(nums[j], nums[i++]);
         }
     }
-    swap(nums[i], nums[right]);
+    swap(nums[i],nums[right]);
     return i;
 }
 

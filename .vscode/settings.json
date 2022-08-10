@@ -37,6 +37,7 @@
         "typeinfo": "cpp",
         "string": "cpp",
         "iterator": "cpp",
-        "memory": "cpp"
+        "memory": "cpp",
+        "mutex": "cpp"
     }
 }
