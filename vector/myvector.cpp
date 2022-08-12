@@ -73,7 +73,7 @@ public:
     size_t capacity() { return m_len; }
 
 private:
-    T* m_data;
+    T *m_data;
     size_t m_len;
     size_t m_size;
 };
