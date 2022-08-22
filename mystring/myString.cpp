@@ -55,7 +55,7 @@ myString& myString::operator=(const myString &str)
 
 ostream &operator<<(ostream &os, const myString &str)
 {
-    os << str.get_char();//constr 对象不能调用非const成员函数 所以get_char声明为const
+    os << str.get_char();//const 对象不能调用非const成员函数 所以get_char声明为const
     return os;
 }
 int main()

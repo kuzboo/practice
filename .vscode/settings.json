@@ -38,6 +38,7 @@
         "string": "cpp",
         "iterator": "cpp",
         "memory": "cpp",
-        "mutex": "cpp"
+        "mutex": "cpp",
+        "typeindex": "cpp"
     }
 }

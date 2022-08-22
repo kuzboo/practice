@@ -81,7 +81,6 @@ public:
     size_t capacity() const { return m_len; }
 
 private:
-
     size_t m_size;
     size_t m_len;
     T *m_data;
@@ -99,6 +98,16 @@ void printVector(const MyVector<T> &vec)
     cout << "capacity=" << vec.capacity() << endl;
 }
 
+template <typename T>
+ostream &operator<<(ostream &os, const MyVector<T> &vec)
+{
+    for (int i = 0; i < vec.size();++i)
+    {
+        os << vec[i] << " ";
+    }
+    return os;
+}
+
 int main()
 {
     MyVector<int> v;
@@ -112,4 +121,6 @@ int main()
     v1 = v;
     printVector(v1);
     printVector(v2);
+    cout<<"<<重载"<<endl;
+    cout << v2 << endl;
 }

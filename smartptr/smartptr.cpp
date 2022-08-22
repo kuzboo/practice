@@ -87,7 +87,6 @@ int main()
     cout << "sp1.use_count(): " << sp1.use_count() << endl;
     cout << "sp2.use_count(): "<<sp2.use_count() << endl;
     sp2 = sp1;
-
-    cout <<"sp1.use_count(): " <<sp1.use_count() << endl;
+    cout << "sp1.use_count(): " << sp1.use_count() << endl;
     cout << "sp2.use_count(): "<<sp2.use_count() << endl;
 }
